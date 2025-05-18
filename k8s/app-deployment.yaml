@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-buffering-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-buffering-app
+  template:
+    metadata:
+      labels:
+        app: api-buffering-app
+    spec:
+      containers:
+        - name: fastapi
+          image: callmeash/api-buffering-app:latest  
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MONGO_URL
+              value: mongodb://mongo:27017/
+

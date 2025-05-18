@@ -1,0 +1,26 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.db
+
+# Environment
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# Kubernetes
+*.yaml~
+
+# VS Code settings
+.vscode/
+
+# Output files
+*.pdf

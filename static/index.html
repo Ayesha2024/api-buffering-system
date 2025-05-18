@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Submit People</title>
+</head>
+
+<body>
+  <h2>Submit People to API</h2>
+
+  <form id="personForm" autocomplete="off">
+    <div id="inputs">
+      <div>
+        First Name: <input type="text" name="first_name" autocomplete="off">
+        Last Name: <input type="text" name="last_name" autocomplete="off">
+      </div>
+    </div>
+    <br>
+    <button type="button" onclick="addPerson()">Add Another Person</button>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="result"></p>
+
+  <script>
+    function addPerson() {
+      const container = document.getElementById("inputs");
+      const div = document.createElement("div");
+      div.innerHTML = 'First Name: <input type="text" name="first_name"> Last Name: <input type="text" name="last_name">';
+      container.appendChild(div);
+    }
+
+    document.getElementById("personForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const inputs = document.querySelectorAll("#inputs div");
+      const data = [];
+
+      inputs.forEach(div => {
+        const fName = div.querySelector("input[name='first_name']").value;
+        const lName = div.querySelector("input[name='last_name']").value;
+        if (fName && lName) {
+          data.push({ first_name: fName, last_name: lName });
+        }
+      });
+
+      fetch("/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(result => {
+          document.getElementById("result").innerText = JSON.stringify(result);
+        })
+        .catch(error => {
+          document.getElementById("result").innerText = "Error: " + error;
+        });
+    });
+  </script>
+</body>
+
+</html>
